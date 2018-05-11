@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block EXTJS %}
+    <script type="text/javascript" src="{% static 'app/order/js/order.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div id="order_info" class="container">
+
+    <!--订单编号-->
+    <h3>订单编号:{{ orderid }}</h3>
+    <!--处理结束-->
+    <ul>
+
+        <!--所有订单信息展示-->
+        {% for a_order in order_info %}
+            <li>
+                <!--商品名称展示-->
+                {{ a_order.goods.productlongname }}
+                <img src="{{ a_order.goods.productimg }}">
+
+                <span> <!-- 数量展示 -->购买数量：{{ a_order.goods_num}}</span>
+            </li>
+
+        <!--订单处理结束-->
+        {% endfor %}
+
+    </ul>
+        <!--订单id展示-->
+        <a href="{% url 'axf:pay' orderid %}">
+            <button class="btn btn-success btn-block">Alipay</button>
+        </a>
+
+    </div>
+
+
+{% endblock %}

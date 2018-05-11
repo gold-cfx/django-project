@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <h3>待收货订单列表</h3>
+    {% if orders %}
+
+
+        {% for order in orders %}
+            <div style="width: 100%; height: 2px; border: indianred 2px solid"></div>
+            <ul>
+                <!--订单信息展示-->
+                {% for goods in order.ordergoodsmodel_set.all %}
+                    <li>
+                        <a href="">
+                            <p><!-- 订单id -->订单id：{{ goods.order_id }}</p>
+                            <p><!-- 数量 -->商品数量：{{ goods.goods_num }}</p>
+                                <!--展示商品的名称-->
+                                {{ goods.goods.productlongname }}
+                                <li>
+                                    <img src="{{ goods.goods.productimg }}" alt="">
+                                </li>
+                                <!--处理结束-->
+                        </a>
+                    </li>
+                <!--订单处理结束-->
+                {% endfor %}
+
+
+            </ul>
+            <a href="{% url 'axf:deleteorder' order.id %}">
+                <button class="btn btn-success btn-block">确认收货</button>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div style="margin-top: 10%">
+
+            <h3 style="color: chartreuse; margin: 10% auto">暂无待收货哦！</h3>
+            <a href="/axf/waitpay/">
+                <button class="btn btn-success btn-block">点我去待支付看看！</button>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
